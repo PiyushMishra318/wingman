@@ -21,6 +21,6 @@ body:
     id: logs
     attributes:
       label: Logs or screenshots
-      description: TUI output, terminal errors, or screenshots if helpful
+      description: TUI output, terminal errors, or screenshots if helpful. Redact usernames and full paths (e.g. C:\Users\…) before posting.
     validations:
       required: false

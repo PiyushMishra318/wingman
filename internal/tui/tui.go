@@ -11,6 +11,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/piyushmishra318/wingman/internal/discover"
 	"github.com/piyushmishra318/wingman/internal/model"
+	"github.com/piyushmishra318/wingman/internal/redact"
 	"github.com/piyushmishra318/wingman/internal/upgrade"
 )
 
@@ -323,7 +324,7 @@ func (m *appModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.scanning = false
 		if msg.err != nil {
 			m.status = "Scan failed"
-			m.logs = append(m.logs, warnStyle.Render("Scan error: "+msg.err.Error()))
+			m.logs = append(m.logs, warnStyle.Render("Scan error: "+redact.String(msg.err.Error())))
 			return m, nil
 		}
 		m.packages = msg.result.Packages

@@ -50,7 +50,7 @@ func Steam() []model.Package {
 			seen[idM[1]] = true
 			pkgs = append(pkgs, model.Package{
 				Name: nameM[1], ID: idM[1], Current: "appid " + idM[1], Available: "via Steam",
-				Source: model.SourceSteam, Status: model.StatusUpgrade, Selected: false, Detail: filepath.Dir(acf),
+				Source: model.SourceSteam, Status: model.StatusUpgrade, Selected: false, Detail: "steamapps",
 			})
 		}
 	}

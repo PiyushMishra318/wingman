@@ -8,6 +8,7 @@ import (
 
 	"github.com/piyushmishra318/wingman/internal/discover"
 	"github.com/piyushmishra318/wingman/internal/model"
+	"github.com/piyushmishra318/wingman/internal/redact"
 	"github.com/piyushmishra318/wingman/internal/tui"
 	"github.com/piyushmishra318/wingman/internal/upgrade"
 )
@@ -25,12 +26,12 @@ func main() {
 
 	if *installSc {
 		name := *shortcutName
-		lnk, err := upgrade.InstallShortcut(bat, name, icon)
+		_, err := upgrade.InstallShortcut(bat, name, icon)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "shortcut failed: %v\n", err)
+			fmt.Fprintf(os.Stderr, "shortcut failed: %s\n", redact.String(err.Error()))
 			os.Exit(1)
 		}
-		fmt.Println("Created shortcut:", lnk)
+		fmt.Println("Created Start Menu shortcut:", name)
 		return
 	}
 
@@ -60,7 +61,7 @@ func main() {
 	}
 
 	if err := tui.Run(); err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
+		fmt.Fprintf(os.Stderr, "error: %s\n", redact.String(err.Error()))
 		os.Exit(1)
 	}
 }
