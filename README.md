@@ -47,6 +47,8 @@ go run ./cmd/scanbench    # parallel scan timing
 go run ./cmd/wingman      # TUI
 ```
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+
 ## Project layout
 
 ```

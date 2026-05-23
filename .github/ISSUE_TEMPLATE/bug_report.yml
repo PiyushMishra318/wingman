@@ -1,0 +1,26 @@
+name: Bug report
+description: Something is broken or incorrect
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Steps to reproduce, expected vs actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Windows version, Wingman version/build, relevant package managers (winget, choco, etc.)
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or screenshots
+      description: TUI output, terminal errors, or screenshots if helpful
+    validations:
+      required: false

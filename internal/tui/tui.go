@@ -29,6 +29,10 @@ type scanDoneMsg struct {
 }
 
 type updateStartedMsg struct{}
+type updateProgressMsg struct {
+	idx, total int
+	name, line string
+}
 type updateDoneMsg struct {
 	ok, fail int
 }
@@ -120,11 +124,25 @@ func (m *appModel) beginUpdates(pkgs []model.Package) tea.Cmd {
 	return func() tea.Msg {
 		go func() {
 			ok, fail := 0, 0
-			for _, p := range ids {
-				if upgrade.Package(p, func(string) {}) {
+			total := len(ids)
+			send := func(msg updateProgressMsg) {
+				if m.prog != nil {
+					m.prog.Send(msg)
+				}
+			}
+			for i, p := range ids {
+				send(updateProgressMsg{
+					idx:   i + 1,
+					total: total,
+					name:  p.Name,
+					line:  fmt.Sprintf("→ [%s] %s", p.Source, p.Name),
+				})
+				if upgrade.Package(p, func(s string) { send(updateProgressMsg{line: "  " + s}) }) {
 					ok++
+					send(updateProgressMsg{line: okStyle.Render("✓ " + p.Name)})
 				} else {
 					fail++
+					send(updateProgressMsg{line: warnStyle.Render("✗ " + p.Name)})
 				}
 			}
 			if m.prog != nil {
@@ -316,6 +334,19 @@ func (m *appModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, nil
 
 	case updateStartedMsg:
+		return m, m.spinner.Tick
+
+	case updateProgressMsg:
+		if msg.idx > 0 && msg.total > 0 {
+			name := msg.name
+			if len(name) > 40 {
+				name = name[:39] + "…"
+			}
+			m.status = fmt.Sprintf("Updating %d/%d: %s", msg.idx, msg.total, name)
+		}
+		if msg.line != "" {
+			m.logs = append(m.logs, msg.line)
+		}
 		return m, m.spinner.Tick
 
 	case updateDoneMsg:
