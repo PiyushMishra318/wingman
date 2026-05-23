@@ -26,8 +26,6 @@ func Package(pkg model.Package, log Logger) bool {
 		return pip(pkg, log)
 	case model.SourceSteam:
 		return steam(pkg, log)
-	case model.SourceFoundry:
-		return foundry(pkg, log)
 	case model.SourceWinUpdate:
 		return windowsUpdate(pkg, log)
 	default:
@@ -108,12 +106,6 @@ func steam(pkg model.Package, log Logger) bool {
 	}
 	log(fmt.Sprintf("steam: %s", pkg.Name))
 	return exec.Command("cmd", "/c", "start", "", "steam://update/"+pkg.ID).Start() == nil
-}
-
-func foundry(pkg model.Package, log Logger) bool {
-	log("foundry: launching updater")
-	cmd := exec.Command(pkg.ID)
-	return cmd.Start() == nil
 }
 
 func windowsUpdate(pkg model.Package, log Logger) bool {

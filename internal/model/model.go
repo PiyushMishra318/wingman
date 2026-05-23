@@ -10,7 +10,6 @@ const (
 	SourcePIP       Source = "pip"
 	SourceScoop     Source = "scoop"
 	SourceSteam     Source = "steam"
-	SourceFoundry   Source = "foundry"
 	SourceWinUpdate Source = "winupdate"
 	SourceARP       Source = "arp"
 	SourceShortcut  Source = "shortcut"
@@ -44,7 +43,7 @@ func (p Package) CanAutoUpdate() bool {
 	}
 	switch p.Source {
 	case SourceWinget, SourceMSStore, SourceChoco, SourceNPM, SourcePIP,
-		SourceScoop, SourceSteam, SourceFoundry, SourceWinUpdate:
+		SourceScoop, SourceSteam, SourceWinUpdate:
 		return p.Status == StatusUpgrade || p.Status == StatusFail
 	}
 	return false
@@ -68,8 +67,6 @@ func SourceOrder(s Source) int {
 		return 6
 	case SourceSteam:
 		return 7
-	case SourceFoundry:
-		return 8
 	case SourceARP:
 		return 9
 	case SourceShortcut:
@@ -91,12 +88,10 @@ func UpgradeOrder(s Source) int {
 		return 3
 	case SourceScoop:
 		return 4
-	case SourceFoundry:
-		return 5
 	case SourceSteam:
-		return 6
+		return 5
 	case SourceWinUpdate:
-		return 7
+		return 6
 	default:
 		return 50
 	}

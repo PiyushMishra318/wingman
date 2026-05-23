@@ -17,16 +17,8 @@ var (
 	steamExe       = `C:\Program Files (x86)\Steam\steam.exe`
 	appIDRe        = regexp.MustCompile(`"appid"\s+"(\d+)"`)
 	appNameRe      = regexp.MustCompile(`"name"\s+"([^"]+)"`)
-	libPathRe      = regexp.MustCompile(`"path"\s+"([^"]+)"`)
-	foundryUpdater = filepath.Join(os.Getenv("LOCALAPPDATA"), "foundryvtt-updater", "installer.exe")
+	libPathRe = regexp.MustCompile(`"path"\s+"([^"]+)"`)
 )
-
-func foundryInstallDir() string {
-	if p := os.Getenv("WINGMAN_FOUNDRY_DIR"); p != "" {
-		return p
-	}
-	return filepath.Join(os.Getenv("LOCALAPPDATA"), "Programs", "FoundryVTT")
-}
 
 func Steam() []model.Package {
 	var pkgs []model.Package
@@ -92,26 +84,6 @@ func steamLibraryDirs() []string {
 		}
 	}
 	return dirs
-}
-
-func Foundry() []model.Package {
-	if _, err := os.Stat(foundryUpdater); err != nil {
-		return nil
-	}
-	current := "?"
-	installDir := foundryInstallDir()
-	if b, err := os.ReadFile(filepath.Join(installDir, "package.json")); err == nil {
-		var pj struct {
-			Version string `json:"version"`
-		}
-		if json.Unmarshal(b, &pj) == nil && pj.Version != "" {
-			current = pj.Version
-		}
-	}
-	return []model.Package{{
-		Name: "Foundry VTT", ID: foundryUpdater, Current: current, Available: "run updater",
-		Source: model.SourceFoundry, Status: model.StatusUpgrade, Selected: true, Detail: installDir,
-	}}
 }
 
 func WindowsUpdates() []model.Package {

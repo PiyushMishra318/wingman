@@ -22,7 +22,6 @@ func All(includeShortcuts bool) Result {
 		npm      []model.Package
 		pip      []model.Package
 		steam    []model.Package
-		foundry  []model.Package
 		winup    []model.Package
 		shortcuts []model.Package
 	)
@@ -43,7 +42,6 @@ func All(includeShortcuts bool) Result {
 	run(NPMGlobal, &npm)
 	run(PIPOutdated, &pip)
 	run(Steam, &steam)
-	run(Foundry, &foundry)
 	run(WindowsUpdates, &winup)
 
 	if includeShortcuts {
@@ -59,16 +57,16 @@ func All(includeShortcuts bool) Result {
 
 	wg.Wait()
 
-	knownCap := len(winget) + len(choco) + len(npm) + len(steam) + len(foundry)
+	knownCap := len(winget) + len(choco) + len(npm) + len(steam)
 	known := make(map[string]bool, knownCap)
-	for _, batch := range [][]model.Package{winget, choco, npm, steam, foundry} {
+	for _, batch := range [][]model.Package{winget, choco, npm, steam} {
 		for _, p := range batch {
 			known[p.Name] = true
 		}
 	}
 	arp := ARP(known)
 
-	merged := Merge(winget, choco, npm, pip, steam, foundry, winup, arp)
+	merged := Merge(winget, choco, npm, pip, steam, winup, arp)
 	return Result{Packages: merged, Shortcuts: shortcuts}
 }
 

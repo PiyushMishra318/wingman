@@ -1,6 +1,6 @@
 # Wingman
 
-Terminal UI to discover and upgrade software on Windows — winget, Chocolatey, npm, pip, Steam, Foundry VTT, Windows Update, and ARP “manual” entries.
+Terminal UI to discover and upgrade software on Windows — winget, Chocolatey, npm, pip, Steam, Windows Update, and ARP “manual” entries.
 
 ## Requirements
 
@@ -31,12 +31,6 @@ Create a Start Menu shortcut:
 ```bat
 wingman.exe -install-shortcut
 ```
-
-## Configuration
-
-| Variable | Purpose |
-|----------|---------|
-| `WINGMAN_FOUNDRY_DIR` | Foundry VTT install directory (default: `%LOCALAPPDATA%\Programs\FoundryVTT`) |
 
 ## Development
 
