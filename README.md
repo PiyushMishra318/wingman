@@ -43,21 +43,25 @@ go run ./cmd/wingman      # TUI
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
-## Releases
+## Releases (alpha)
 
-Publishing a release is tag-only (no `gh` CLI required locally):
+Wingman is in **alpha**. Releases are pre-releases only, tagged with [semver pre-release](https://semver.org/#spec-item-9) IDs:
+
+`v0.1.0-alpha.1`, `v0.1.0-alpha.2`, …
+
+Publishing is tag-only (no `gh` CLI required locally):
 
 ```bash
-git tag vX.Y.Z
-git push origin vX.Y.Z
+git tag v0.1.0-alpha.1
+git push origin v0.1.0-alpha.1
 ```
 
-GitHub Actions builds `wingman.exe` on Windows and attaches it to the release.
+GitHub Actions builds `wingman.exe` on Windows and attaches it to a **pre-release** on GitHub.
 
-To attach assets to an **existing** tag (for example `v1.0.0` was pushed before CI existed), either:
+To rebuild assets for an **existing** alpha tag, either:
 
 - In GitHub: **Actions → Release → Run workflow**, enter the tag name, or
-- Re-push the tag with git: `git push origin :refs/tags/v1.0.0` then `git push origin v1.0.0`
+- Re-push the tag: `git push origin :refs/tags/v0.1.0-alpha.1` then `git push origin v0.1.0-alpha.1`
 
 ## Project layout
 
