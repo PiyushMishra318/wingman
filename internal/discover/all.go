@@ -105,6 +105,10 @@ func Merge(groups ...[]model.Package) []model.Package {
 }
 
 func sortPackages(out []model.Package) {
+	nameKeys := make([]string, len(out))
+	for i := range out {
+		nameKeys[i] = normName(out[i].Name)
+	}
 	sort.Slice(out, func(i, j int) bool {
 		oi, oj := model.SourceOrder(out[i].Source), model.SourceOrder(out[j].Source)
 		if oi != oj {
@@ -114,6 +118,6 @@ func sortPackages(out []model.Package) {
 		if ci != cj {
 			return ci
 		}
-		return normName(out[i].Name) < normName(out[j].Name)
+		return nameKeys[i] < nameKeys[j]
 	})
 }
