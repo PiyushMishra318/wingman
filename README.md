@@ -43,6 +43,22 @@ go run ./cmd/wingman      # TUI
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
+## Releases
+
+Publishing a release is tag-only (no `gh` CLI required locally):
+
+```bash
+git tag vX.Y.Z
+git push origin vX.Y.Z
+```
+
+GitHub Actions builds `wingman.exe` on Windows and attaches it to the release.
+
+To attach assets to an **existing** tag (for example `v1.0.0` was pushed before CI existed), either:
+
+- In GitHub: **Actions → Release → Run workflow**, enter the tag name, or
+- Re-push the tag with git: `git push origin :refs/tags/v1.0.0` then `git push origin v1.0.0`
+
 ## Project layout
 
 ```
