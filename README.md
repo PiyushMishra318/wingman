@@ -49,19 +49,19 @@ Wingman is in **alpha**. Releases are pre-releases only, tagged with [semver pre
 
 `v0.1.0-alpha.1`, `v0.1.0-alpha.2`, …
 
-Publishing is tag-only (no `gh` CLI required locally):
+Every push to `master` (or `main`) that includes new commits since the latest alpha tag triggers **Release** in GitHub Actions. The workflow picks the next tag from [conventional commits](https://www.conventionalcommits.org/) since the last release:
 
-```bash
-git tag v0.1.0-alpha.1
-git push origin v0.1.0-alpha.1
-```
+| Commits since last tag | Next tag example |
+| --- | --- |
+| `fix:`, `docs:`, `chore:`, etc. | `v0.1.0-alpha.1` → `v0.1.0-alpha.2` (alpha serial only) |
+| `feat:` | `v0.1.0-alpha.2` → `v0.2.0-alpha.1` (minor base bump, alpha reset) |
+| `BREAKING CHANGE` / `!` | same as feat while on `0.x` |
+
+Add `[skip release]` anywhere in the commit message to skip one push. No local `git tag` or `gh` CLI is required.
 
 GitHub Actions builds `wingman.exe` on Windows and attaches it to a **pre-release** on GitHub.
 
-To rebuild assets for an **existing** alpha tag, either:
-
-- In GitHub: **Actions → Release → Run workflow**, enter the tag name, or
-- Re-push the tag: `git push origin :refs/tags/v0.1.0-alpha.1` then `git push origin v0.1.0-alpha.1`
+To rebuild assets for an **existing** alpha tag, use **Actions → Release → Run workflow** and enter the tag name.
 
 ## Project layout
 
