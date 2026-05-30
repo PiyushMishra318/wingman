@@ -7,8 +7,10 @@
   <title>Wingman</title>
   <link rel="stylesheet" href="/styles.css" />
 </head>
-<body>
-  <header class="header"><div class="header__inner">
+<body class="theme-wingman">
+  <div class="bg-animation" aria-hidden="true"></div>
+  <header class="header">
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle color theme" title="Toggle theme"><span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">&#9728;</span><span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">&#9789;</span></button><div class="header__inner">
     <span class="badge">Go · Windows TUI</span>
     <h1>Wingman</h1>
     <p>Terminal UI to discover and upgrade software on Windows — winget, Chocolatey, npm, pip, Steam, Windows Update, and ARP entries.</p>
@@ -19,5 +21,6 @@
 wingman.exe -y       # upgrade all
 go run ./cmd/wingman # dev</pre></section></main>
   <footer class="site-footer footer"><p>MIT © 2026 · <a href="https://piyushm.dev">piyushm.dev</a> · <a href="https://github.com/PiyushMishra318/wingman" target="_blank" rel="noopener noreferrer">View on GitHub</a></p></footer>
+  <script src="/theme.js"></script>
 </body>
 </html>
