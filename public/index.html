@@ -1,33 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wingman — upgrade everything on Windows</title>
+  <meta name="description" content="Wingman is a terminal UI to discover and upgrade software on Windows — winget, Chocolatey, npm, pip, Steam, Windows Update, and ARP entries." />
+  <meta name="theme-color" content="#05070c" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Archivo:wght@400;600;700&display=swap" />
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Terminal UI to discover and upgrade software on Windows — winget, Chocolatey, npm, pip, Steam, Windows Update, and ARP entries." />
-  <title>Wingman</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=Karla:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="theme-wingman portfolio-designed landing-page">
+<body class="theme-wingman">
   <div class="bg-animation" aria-hidden="true"></div>
-  <header class="header landing-hero">
-        <div class="header__top">
-      <a class="header__brand" href="https://piyushm.dev">piyushm.dev</a>
-      <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle color theme" title="Toggle theme"><span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">&#9728;</span><span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">&#9789;</span></button>
+  <div class="grain" aria-hidden="true"></div>
+
+  <nav class="site-nav" aria-label="Site">
+    <a class="site-nav__brand" href="https://piyushm.dev">piyushm.dev</a>
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle color theme" title="Toggle theme">
+      <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">&#9728;</span>
+      <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">&#9789;</span>
+    </button>
+  </nav>
+
+  <header class="hero-split">
+    <div class="hero-split__copy">
+      <p class="hero__kicker">Go · Windows TUI · Alpha</p>
+      <h1 class="hero__title"><span class="hero__title-accent">Wingman</span></h1>
+      <p class="hero__tagline">One terminal to scan every package manager on your machine — browse updates with the keyboard, or upgrade everything silently with <code>-y</code>.</p>
+      <div class="hero__actions">
+        <a class="btn btn-primary" href="https://github.com/PiyushMishra318/wingman/releases/latest" id="release-link">Download for Windows</a>
+        <a class="btn btn-secondary" href="https://github.com/PiyushMishra318/wingman" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+      </div>
     </div>
-<div class="header__inner">
-    <span class="badge">Go · Windows TUI</span>
-    <h1>Wingman</h1>
-    <p>Terminal UI to discover and upgrade software on Windows — winget, Chocolatey, npm, pip, Steam, Windows Update, and ARP entries.</p>
-  
-      <a class="header__github" href="https://github.com/PiyushMishra318/wingman" target="_blank" rel="noopener noreferrer">View on GitHub</a>
-    </div></header>
-  <main class="page-main main"><section class="card"><h2>Features</h2><div class="feature-grid"><div class="feature-tile"><strong>Scan installed software across package managers</strong><span></span></div><div class="feature-tile"><strong>Interactive TUI or non-interactive -y upgrades</strong><span></span></div><div class="feature-tile"><strong>Alpha pre-releases on GitHub</strong><span></span></div></div><div class="actions"><a class="btn" href="https://github.com/PiyushMishra318/wingman/releases">Download releases</a><a class="btn btn--ghost" href="https://github.com/PiyushMishra318/wingman">Source</a></div></section><section class="card"><h2>Quick start</h2><pre>wingman.bat          # interactive TUI
+
+    <section class="tui-preview" aria-label="Terminal UI preview">
+      <div class="tui-preview__frame">
+        <div class="tui-preview__titlebar">
+          <span class="tui-preview__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="tui-preview__title">Wingman</span>
+          <span class="tui-preview__badge">12 updates</span>
+        </div>
+        <div class="tui-preview__head" aria-hidden="true">
+          <span>Package</span>
+          <span>Installed</span>
+          <span>Available</span>
+          <span>Source</span>
+        </div>
+        <div class="tui-preview__rows" aria-hidden="true">
+          <div class="tui-row"><span>Node.js</span><span>20.11.0</span><span>22.1.0</span><span>winget</span></div>
+          <div class="tui-row tui-row--active"><span>Git</span><span>2.43.0</span><span>2.44.0</span><span>choco</span></div>
+          <div class="tui-row"><span>eslint</span><span>8.56.0</span><span>9.0.0</span><span>npm</span></div>
+          <div class="tui-row"><span>requests</span><span>2.31.0</span><span>2.32.0</span><span>pip</span></div>
+          <div class="tui-row tui-row--dim"><span>Steam — Hollow Knight</span><span>—</span><span>patch</span><span>steam</span></div>
+        </div>
+        <div class="tui-preview__status" aria-hidden="true">
+          <span>142 tracked</span>
+          <span class="tui-preview__keys">↑↓ navigate · Enter upgrade · q quit</span>
+        </div>
+      </div>
+      <p class="tui-preview__caption">Keyboard-first inventory — every source, one scrollable list.</p>
+    </section>
+  </header>
+
+  <main class="page-main">
+    <section class="benefits" aria-labelledby="benefits-heading">
+      <h2 id="benefits-heading" class="section-kicker">Why Wingman</h2>
+      <ul class="benefit-strip">
+        <li class="benefit-strip__item">
+          <span class="benefit-strip__icon" aria-hidden="true">⊞</span>
+          <strong>Every source, one scan</strong>
+          <span>winget, Chocolatey, npm, pip, Steam, Windows Update, and ARP entries — merged into a single inventory.</span>
+        </li>
+        <li class="benefit-strip__item">
+          <span class="benefit-strip__icon" aria-hidden="true">⌨</span>
+          <strong>Built for the terminal</strong>
+          <span>Filter, navigate, and upgrade with keyboard-first TUI — no clicking through six different apps.</span>
+        </li>
+        <li class="benefit-strip__item">
+          <span class="benefit-strip__icon" aria-hidden="true">⚡</span>
+          <strong>Silent when you need it</strong>
+          <span>Run <code>wingman.exe -y</code> to apply every supported upgrade without prompts.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="moments" aria-labelledby="moments-heading">
+      <h2 id="moments-heading" class="section-kicker">How it fits your workflow</h2>
+      <article class="moment">
+        <div class="moment__copy">
+          <h3>Parallel discovery across managers</h3>
+          <p>Wingman scans package sources in parallel and merges results — so you see what&apos;s outdated without opening winget, choco, and npm separately.</p>
+        </div>
+        <div class="moment__visual moment__visual--sources" aria-hidden="true">
+          <span class="source-chip source-chip--active">winget</span>
+          <span class="source-chip">choco</span>
+          <span class="source-chip">npm</span>
+          <span class="source-chip">pip</span>
+          <span class="source-chip">steam</span>
+          <span class="source-chip">win update</span>
+          <span class="source-chip">arp</span>
+          <span class="scan-line">scan complete · 142 packages</span>
+        </div>
+      </article>
+      <article class="moment moment--reverse">
+        <div class="moment__copy">
+          <h3>Interactive or hands-off</h3>
+          <p>Launch <code>wingman.bat</code> for the full Bubble Tea TUI, or pass <code>-y</code> when you want every upgrade applied in one shot.</p>
+        </div>
+        <div class="moment__visual moment__visual--cli" aria-hidden="true">
+          <span class="cli-line"><em>C:\&gt;</em> wingman.exe -y</span>
+          <span class="cli-line cli-line--ok">▸ Upgrading Git 2.43.0 → 2.44.0</span>
+          <span class="cli-line cli-line--ok">▸ Upgrading eslint 8.56.0 → 9.0.0</span>
+          <span class="cli-line cli-line--dim">▸ 10 packages upgraded · 2 skipped</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="install" aria-labelledby="install-heading">
+      <div class="install__inner">
+        <h2 id="install-heading">Get Wingman on Windows</h2>
+        <p>Download the latest alpha pre-release from GitHub — run <code>wingman.bat</code> or <code>wingman.exe</code> locally.</p>
+        <a class="btn btn-primary btn--lg" href="https://github.com/PiyushMishra318/wingman/releases/latest" id="release-link-cta">Download release</a>
+        <pre class="quick-start" aria-label="Quick start commands"><code>wingman.bat          # interactive TUI
 wingman.exe -y       # upgrade all
-go run ./cmd/wingman # dev</pre></section></main>
-  <footer class="site-footer footer"><p>MIT © 2026 · <a href="https://piyushm.dev">piyushm.dev</a> · <a href="https://github.com/PiyushMishra318/wingman" target="_blank" rel="noopener noreferrer">View on GitHub</a></p></footer>
-  <script src="/theme.js"></script>
+go run ./cmd/wingman # dev</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>MIT © 2026 · <a href="https://piyushm.dev">piyushm.dev</a> · <a href="https://github.com/PiyushMishra318/wingman">GitHub</a> · <a href="https://github.com/PiyushMishra318/wingman#readme">For developers</a></p>
+  </footer>
+
+  <script>
+    fetch("https://api.github.com/repos/PiyushMishra318/wingman/releases/latest")
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (rel) {
+        if (!rel) return;
+        var exe = rel.assets && rel.assets.find(function (a) {
+          return a.name && (a.name.endsWith(".exe") || a.name.endsWith(".zip"));
+        });
+        var url = exe ? exe.browser_download_url : rel.html_url;
+        var links = document.querySelectorAll("#release-link, #release-link-cta");
+        for (var i = 0; i < links.length; i++) links[i].href = url;
+      })
+      .catch(function () {});
+  </script>
+  <script src="theme.js"></script>
 </body>
 </html>
