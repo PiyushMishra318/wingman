@@ -3,448 +3,527 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wingman — upgrade everything on Windows</title>
-  <meta name="description" content="Wingman is a terminal UI to discover and upgrade software on Windows — winget, Chocolatey, npm, pip, Steam, Windows Update, and ARP entries." />
-  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="description" content="Wingman — One TUI to upgrade them all. winget, Chocolatey, npm, pip, Steam, Windows Update and ARP in a single Go-powered terminal UI." />
+  <title>Wingman — Terminal Package Upgrade TUI for Windows</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <!-- CRT scanlines + background grid -->
-  <div class="scanlines" aria-hidden="true"></div>
-  <div class="bg-grid" aria-hidden="true"></div>
-  <div class="bg-glow" aria-hidden="true"></div>
-
-  <!-- Navigation -->
+  <!-- ══════════════════════════════════════════
+       NAV
+  ══════════════════════════════════════════ -->
   <nav class="nav" aria-label="Site navigation">
-    <a class="nav__brand" href="/">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <polyline points="15 18 9 12 15 6"/>
-      </svg>
-      PIYUSHM.DEV
-    </a>
-    <div class="nav__badge">ALPHA</div>
+    <div class="container">
+      <div class="nav-inner">
+
+        <a href="https://piyushm.dev" class="nav-back" aria-label="Back to piyushm.dev">
+          <svg class="nav-back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          PIYUSHM.DEV
+        </a>
+
+        <div class="nav-center">
+          <span class="nav-logo">WINGMAN</span>
+          <span class="nav-badge">ALPHA</span>
+        </div>
+
+        <div class="nav-right">
+          <a href="#features" class="nav-link">Features</a>
+          <a href="#how-it-works" class="nav-link">How it works</a>
+          <a href="https://github.com/piyush97/wingman" class="nav-cta" target="_blank" rel="noopener noreferrer">
+            GitHub
+          </a>
+        </div>
+
+      </div>
+    </div>
   </nav>
 
-  <!-- Hero -->
-  <header class="hero">
-    <div class="hero__inner">
+  <!-- ══════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════ -->
+  <section class="hero" aria-label="Hero">
+    <div class="hero-glow-bg" aria-hidden="true"></div>
+    <div class="container">
+      <div class="hero-inner">
 
-      <!-- Copy -->
-      <div class="hero__copy">
-        <p class="hero__kicker">
-          <span class="hero__kicker-dot"></span>
-          Go · Windows TUI · Multi-source
-        </p>
-        <h1 class="hero__title">
-          WING<span class="hero__title-accent">MAN</span>
-        </h1>
-        <p class="hero__sub">One terminal to rule every package manager.</p>
-        <p class="hero__desc">
-          Discover and upgrade software across winget, Chocolatey, npm, pip, Steam,
-          Windows Update, and ARP — all at once. Browse interactively or go silent with
-          <code>-y</code>.
-        </p>
-        <div class="hero__actions">
-          <a class="btn btn--primary" href="https://github.com/PiyushMishra318/wingman/releases/latest" id="release-link">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
+        <!-- Left: content -->
+        <div class="hero-content">
+
+          <div class="hero-eyebrow">
+            <span class="hero-eyebrow-dot" aria-hidden="true"></span>
+            Windows · Go · TUI · Open Source
+          </div>
+
+          <h1 class="hero-title">
+            One terminal.
+            <span class="hero-title-accent">All your updates.</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            Wingman discovers upgradeable packages across every major Windows package manager and lets you update everything from a single, beautiful terminal interface.
+          </p>
+
+          <div class="hero-managers" aria-label="Supported package managers">
+            <span class="hero-manager-tag">winget</span>
+            <span class="hero-manager-tag">Chocolatey</span>
+            <span class="hero-manager-tag">npm</span>
+            <span class="hero-manager-tag">pip</span>
+            <span class="hero-manager-tag">Steam</span>
+            <span class="hero-manager-tag">Windows Update</span>
+            <span class="hero-manager-tag">ARP</span>
+          </div>
+
+          <div class="hero-actions">
+            <a href="https://github.com/piyush97/wingman/releases" class="btn-primary" target="_blank" rel="noopener noreferrer">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Download Alpha
+            </a>
+            <a href="https://github.com/piyush97/wingman" class="btn-secondary" target="_blank" rel="noopener noreferrer">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.071 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.682-.103-.254-.446-1.27.098-2.646 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.376.202 2.392.1 2.646.64.698 1.028 1.591 1.028 2.682 0 3.841-2.337 4.687-4.565 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.162 22 16.416 22 12c0-5.523-4.477-10-10-10z"/>
+              </svg>
+              View Source
+            </a>
+          </div>
+
+          <div class="hero-stat-row">
+            <div class="hero-stat">
+              <span class="hero-stat-value">7</span>
+              <span class="hero-stat-label">Package managers</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-value">Go</span>
+              <span class="hero-stat-label">Powered runtime</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-value">MIT</span>
+              <span class="hero-stat-label">Open source</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: TUI mockup -->
+        <div class="tui-panel" aria-label="TUI mockup preview">
+          <div class="tui-window" role="img" aria-label="Wingman terminal interface showing package list">
+
+            <div class="tui-titlebar">
+              <div class="tui-titlebar-dots" aria-hidden="true">
+                <span class="tui-dot tui-dot-red"></span>
+                <span class="tui-dot tui-dot-amber"></span>
+                <span class="tui-dot tui-dot-green-led"></span>
+              </div>
+              <span class="tui-titlebar-label">wingman.exe — Windows Terminal</span>
+            </div>
+
+            <div class="tui-body">
+              <div class="tui-header-row" aria-hidden="true">
+                <span class="tui-cell">NAME</span>
+                <span class="tui-cell">MANAGER</span>
+                <span class="tui-cell">CURRENT</span>
+                <span class="tui-cell">LATEST</span>
+                <span class="tui-cell">STATUS</span>
+              </div>
+
+              <div class="tui-row tui-row-selected" role="row">
+                <span class="tui-cell tui-cell-name">Git</span>
+                <span class="tui-cell tui-cell-manager">winget</span>
+                <span class="tui-cell tui-cell-version">2.43.0</span>
+                <span class="tui-cell tui-cell-latest">2.45.2</span>
+                <span class="tui-cell tui-cell-status tui-status-update">UPDATE</span>
+              </div>
+
+              <div class="tui-row" role="row">
+                <span class="tui-cell tui-cell-name">Node.js</span>
+                <span class="tui-cell tui-cell-manager">winget</span>
+                <span class="tui-cell tui-cell-version">20.11.0</span>
+                <span class="tui-cell tui-cell-latest">22.3.0</span>
+                <span class="tui-cell tui-cell-status tui-status-update">UPDATE</span>
+              </div>
+
+              <div class="tui-row" role="row">
+                <span class="tui-cell tui-cell-name">Python</span>
+                <span class="tui-cell tui-cell-manager">choco</span>
+                <span class="tui-cell tui-cell-version">3.11.8</span>
+                <span class="tui-cell tui-cell-latest">3.12.4</span>
+                <span class="tui-cell tui-cell-status tui-status-update">UPDATE</span>
+              </div>
+
+              <div class="tui-row" role="row">
+                <span class="tui-cell tui-cell-name">TypeScript</span>
+                <span class="tui-cell tui-cell-manager">npm</span>
+                <span class="tui-cell tui-cell-version">5.3.3</span>
+                <span class="tui-cell tui-cell-latest">5.5.3</span>
+                <span class="tui-cell tui-cell-status tui-status-update">UPDATE</span>
+              </div>
+
+              <div class="tui-row" role="row">
+                <span class="tui-cell tui-cell-name">pip</span>
+                <span class="tui-cell tui-cell-manager">pip</span>
+                <span class="tui-cell tui-cell-version">24.0</span>
+                <span class="tui-cell tui-cell-latest">24.1</span>
+                <span class="tui-cell tui-cell-status tui-status-update">UPDATE</span>
+              </div>
+
+              <div class="tui-row" role="row">
+                <span class="tui-cell tui-cell-name">VS Code</span>
+                <span class="tui-cell tui-cell-manager">winget</span>
+                <span class="tui-cell tui-cell-version">1.89.1</span>
+                <span class="tui-cell tui-cell-latest">1.89.1</span>
+                <span class="tui-cell tui-cell-status tui-status-ok">OK</span>
+              </div>
+
+              <div class="tui-row" role="row">
+                <span class="tui-cell tui-cell-name">7-Zip</span>
+                <span class="tui-cell tui-cell-manager">choco</span>
+                <span class="tui-cell tui-cell-version">23.01</span>
+                <span class="tui-cell tui-cell-latest">24.07</span>
+                <span class="tui-cell tui-cell-status tui-status-update">UPDATE</span>
+              </div>
+
+              <div class="tui-row" role="row">
+                <span class="tui-cell tui-cell-name">Steam</span>
+                <span class="tui-cell tui-cell-manager">steam</span>
+                <span class="tui-cell tui-cell-version">—</span>
+                <span class="tui-cell tui-cell-latest">—</span>
+                <span class="tui-cell tui-cell-status tui-status-manual">MANUAL</span>
+              </div>
+
+              <div class="tui-progress-bar" aria-label="Upgrade progress">
+                <span class="tui-progress-label">Scanning…</span>
+                <div class="tui-progress-track">
+                  <div class="tui-progress-fill"></div>
+                </div>
+                <span class="tui-progress-count">6 / 10</span>
+              </div>
+            </div>
+
+            <div class="tui-statusbar">
+              <div class="tui-statusbar-keys" aria-label="Keyboard shortcuts">
+                <span class="tui-key">
+                  <kbd class="tui-keybind">U</kbd> upgrade
+                </span>
+                <span class="tui-key">
+                  <kbd class="tui-keybind">A</kbd> all
+                </span>
+                <span class="tui-key">
+                  <kbd class="tui-keybind">F</kbd> filter
+                </span>
+                <span class="tui-key">
+                  <kbd class="tui-keybind">Q</kbd> quit
+                </span>
+              </div>
+              <span>8 packages · 6 updates</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       MANAGERS STRIP
+  ══════════════════════════════════════════ -->
+  <section class="managers-section" aria-labelledby="managers-heading">
+    <div class="container">
+      <div class="managers-header section-header">
+        <span class="section-label">Coverage</span>
+        <h2 class="section-title" id="managers-heading">Every manager. One screen.</h2>
+        <p class="section-desc">Wingman scans all of them in parallel and surfaces what needs your attention.</p>
+      </div>
+      <div class="managers-grid">
+
+        <div class="manager-card">
+          <svg class="manager-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+            <polyline points="8 21 12 17 16 21"></polyline>
+          </svg>
+          <span class="manager-name">winget</span>
+        </div>
+
+        <div class="manager-card">
+          <svg class="manager-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+          </svg>
+          <span class="manager-name">Chocolatey</span>
+        </div>
+
+        <div class="manager-card">
+          <svg class="manager-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span class="manager-name">npm</span>
+        </div>
+
+        <div class="manager-card">
+          <svg class="manager-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+          <span class="manager-name">pip</span>
+        </div>
+
+        <div class="manager-card">
+          <svg class="manager-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="2.18"></rect>
+            <line x1="7" y1="2" x2="7" y2="22"></line>
+            <line x1="17" y1="2" x2="17" y2="22"></line>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+          </svg>
+          <span class="manager-name">Steam</span>
+        </div>
+
+        <div class="manager-card">
+          <svg class="manager-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7"></path>
+          </svg>
+          <span class="manager-name">Win Update</span>
+        </div>
+
+        <div class="manager-card">
+          <svg class="manager-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"></path>
+          </svg>
+          <span class="manager-name">ARP</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       FEATURES
+  ══════════════════════════════════════════ -->
+  <section class="section-alt" id="features" aria-labelledby="features-heading">
+    <div class="container">
+
+      <div class="section-header">
+        <span class="section-label">Features</span>
+        <h2 class="section-title" id="features-heading">Built for the terminal. Built for Windows.</h2>
+        <p class="section-desc">Everything you need to keep a Windows machine up to date — no web browser required.</p>
+      </div>
+
+      <div class="features-grid">
+
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
             </svg>
-            Download for Windows
+          </div>
+          <h3 class="feature-title">Parallel Discovery</h3>
+          <p class="feature-desc">All package managers are scanned simultaneously. No sequential waiting — results appear in seconds.</p>
+          <span class="feature-tag feature-tag-fast">FAST</span>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </div>
+          <h3 class="feature-title">CRT Terminal UI</h3>
+          <p class="feature-desc">An interactive TUI built with Bubble Tea. Keyboard-driven, filter, sort, and upgrade without leaving the terminal.</p>
+          <span class="feature-tag feature-tag-tui">TUI</span>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 8v4l3 3"></path>
+            </svg>
+          </div>
+          <h3 class="feature-title">Non-Interactive Mode</h3>
+          <p class="feature-desc">Run <code>wingman.exe -y</code> in CI or scheduled tasks to upgrade everything that supports auto-update silently.</p>
+          <span class="feature-tag feature-tag-smart">SMART</span>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <h3 class="feature-title">Safe by Default</h3>
+          <p class="feature-desc">Wingman shows you exactly what will change before touching anything. Preview mode first, commit when ready.</p>
+          <span class="feature-tag feature-tag-safe">SAFE</span>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </div>
+          <h3 class="feature-title">Go-Powered Core</h3>
+          <p class="feature-desc">Written in Go 1.23+. A single statically linked binary — no runtime, no dependencies, no installer drama.</p>
+          <span class="feature-tag feature-tag-go">GO</span>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrap">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"></path>
+            </svg>
+          </div>
+          <h3 class="feature-title">Open Source &amp; Extensible</h3>
+          <p class="feature-desc">MIT licensed. Add your own package manager source by implementing a simple Go interface. PRs welcome.</p>
+          <span class="feature-tag feature-tag-open">OPEN</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       HOW IT WORKS
+  ══════════════════════════════════════════ -->
+  <section class="section" id="how-it-works" aria-labelledby="how-heading">
+    <div class="container">
+
+      <div class="section-header">
+        <span class="section-label">How it works</span>
+        <h2 class="section-title" id="how-heading">From zero to upgraded in four steps</h2>
+        <p class="section-desc">Windows 10/11 + Go 1.23+ is all you need. Everything else is optional.</p>
+      </div>
+
+      <div class="steps-list">
+
+        <div class="step-item">
+          <div class="step-number-wrap">
+            <div class="step-number" aria-hidden="true">01</div>
+            <div class="step-connector" aria-hidden="true"></div>
+          </div>
+          <div class="step-content">
+            <h3 class="step-title">Install Go and clone</h3>
+            <p class="step-desc">Make sure Go 1.23 or later is on your PATH, then clone the Wingman repository from GitHub.</p>
+            <code class="step-code">git clone https://github.com/piyush97/wingman</code>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number-wrap">
+            <div class="step-number" aria-hidden="true">02</div>
+            <div class="step-connector" aria-hidden="true"></div>
+          </div>
+          <div class="step-content">
+            <h3 class="step-title">Build or run directly</h3>
+            <p class="step-desc">Use the provided batch file for a one-shot build, or run straight from source during development.</p>
+            <code class="step-code">wingman.bat</code>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number-wrap">
+            <div class="step-number" aria-hidden="true">03</div>
+            <div class="step-connector" aria-hidden="true"></div>
+          </div>
+          <div class="step-content">
+            <h3 class="step-title">Wingman scans everything</h3>
+            <p class="step-desc">All detected package managers are queried in parallel. A live TUI table populates as results arrive — no spinner needed.</p>
+            <code class="step-code">go run ./cmd/wingman</code>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number-wrap">
+            <div class="step-number" aria-hidden="true">04</div>
+            <div class="step-connector" aria-hidden="true"></div>
+          </div>
+          <div class="step-content">
+            <h3 class="step-title">Select and upgrade</h3>
+            <p class="step-desc">Navigate rows with arrow keys, press <kbd>U</kbd> for a single package or <kbd>A</kbd> for all updates. Or run fully unattended with <code>-y</code>.</p>
+            <code class="step-code">wingman.exe -y</code>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       CTA BAND
+  ══════════════════════════════════════════ -->
+  <section class="cta-band" aria-labelledby="cta-heading">
+    <div class="cta-glow-bg" aria-hidden="true"></div>
+    <div class="container">
+      <div class="cta-inner">
+
+        <h2 class="cta-title" id="cta-heading">Your packages are waiting.</h2>
+        <p class="cta-subtitle">Download the latest alpha or build from source. Wingman runs on any Windows 10/11 machine with Go.</p>
+
+        <div class="cta-actions">
+          <a href="https://github.com/piyush97/wingman/releases" class="btn-primary" target="_blank" rel="noopener noreferrer">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download Alpha
           </a>
-          <a class="btn btn--ghost" href="https://github.com/PiyushMishra318/wingman" target="_blank" rel="noopener noreferrer">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+          <a href="https://github.com/piyush97/wingman" class="btn-secondary" target="_blank" rel="noopener noreferrer">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.071 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.682-.103-.254-.446-1.27.098-2.646 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.376.202 2.392.1 2.646.64.698 1.028 1.591 1.028 2.682 0 3.841-2.337 4.687-4.565 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.162 22 16.416 22 12c0-5.523-4.477-10-10-10z"/>
             </svg>
             View on GitHub
           </a>
         </div>
-        <div class="hero__meta">
-          <span class="hero__meta-pill">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="10"/>
-              <polyline points="12 6 12 12 16 14"/>
-            </svg>
-            Conventional commits CI
-          </span>
-          <span class="hero__meta-pill">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-            </svg>
-            Bubble Tea TUI
-          </span>
-          <span class="hero__meta-pill">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-              <polyline points="22 4 12 14.01 9 11.01"/>
-            </svg>
-            MIT License
-          </span>
-        </div>
-      </div>
 
-      <!-- TUI visual -->
-      <div class="tui" aria-label="Terminal UI preview">
-        <div class="tui__window">
-          <div class="tui__titlebar">
-            <div class="tui__dots" aria-hidden="true">
-              <span class="tui__dot tui__dot--red"></span>
-              <span class="tui__dot tui__dot--yellow"></span>
-              <span class="tui__dot tui__dot--green"></span>
-            </div>
-            <span class="tui__title-text">wingman — 12 updates available</span>
-          </div>
-          <div class="tui__head" aria-hidden="true">
-            <span>PACKAGE</span>
-            <span>INSTALLED</span>
-            <span>LATEST</span>
-            <span>SOURCE</span>
-          </div>
-          <div class="tui__body" aria-hidden="true">
-            <div class="tui__row">
-              <span>Node.js</span>
-              <span>20.11.0</span>
-              <span class="tui__ver-new">22.4.0</span>
-              <span class="tui__src tui__src--winget">winget</span>
-            </div>
-            <div class="tui__row tui__row--active">
-              <span>
-                <span class="tui__cursor">▶</span> Git
-              </span>
-              <span>2.43.0</span>
-              <span class="tui__ver-new">2.45.2</span>
-              <span class="tui__src tui__src--choco">choco</span>
-            </div>
-            <div class="tui__row">
-              <span>eslint</span>
-              <span>8.56.0</span>
-              <span class="tui__ver-new">9.0.0</span>
-              <span class="tui__src tui__src--npm">npm</span>
-            </div>
-            <div class="tui__row">
-              <span>requests</span>
-              <span>2.31.0</span>
-              <span class="tui__ver-new">2.32.3</span>
-              <span class="tui__src tui__src--pip">pip</span>
-            </div>
-            <div class="tui__row tui__row--dim">
-              <span>Hollow Knight</span>
-              <span>—</span>
-              <span class="tui__ver-new">patch</span>
-              <span class="tui__src tui__src--steam">steam</span>
-            </div>
-          </div>
-          <div class="tui__footer" aria-hidden="true">
-            <span class="tui__count">142 tracked · 12 upgradeable</span>
-            <span class="tui__keys">↑↓ nav · Enter upgrade · q quit</span>
-          </div>
-        </div>
-        <div class="tui__glow" aria-hidden="true"></div>
-      </div>
+        <p class="cta-note">MIT licensed · Windows 10/11 · Go 1.23+ required</p>
 
+      </div>
     </div>
-  </header>
+  </section>
 
-  <main>
+  <!-- ══════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════ -->
+  <footer class="footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-inner">
 
-    <!-- Features -->
-    <section class="features" aria-labelledby="features-heading">
-      <div class="features__inner">
-        <div class="features__header">
-          <p class="features__kicker">// CAPABILITIES</p>
-          <h2 id="features-heading" class="features__title">Everything your system needs, unified.</h2>
-        </div>
-        <div class="features__grid">
-
-          <!-- Wide card: 7 sources -->
-          <article class="feature feature--wide">
-            <div class="feature__icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="3" width="20" height="14" rx="2"/>
-                <line x1="8" y1="21" x2="16" y2="21"/>
-                <line x1="12" y1="17" x2="12" y2="21"/>
-              </svg>
-            </div>
-            <h3 class="feature__name">7 Package Sources, One Scan</h3>
-            <p class="feature__desc">winget, Chocolatey, npm, pip, Steam, Windows Update, and ARP entries — Wingman queries them all in parallel and merges into a single scrollable inventory.</p>
-            <div class="feature__sources" aria-hidden="true">
-              <span class="feature__src feature__src--winget">winget</span>
-              <span class="feature__src feature__src--choco">choco</span>
-              <span class="feature__src feature__src--npm">npm</span>
-              <span class="feature__src feature__src--pip">pip</span>
-              <span class="feature__src feature__src--steam">steam</span>
-              <span class="feature__src">win update</span>
-              <span class="feature__src">arp</span>
-            </div>
-          </article>
-
-          <!-- Keyboard TUI -->
-          <article class="feature">
-            <div class="feature__icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="4 17 10 11 4 5"/>
-                <line x1="12" y1="19" x2="20" y2="19"/>
-              </svg>
-            </div>
-            <h3 class="feature__name">Keyboard-First TUI</h3>
-            <p class="feature__desc">Navigate with arrow keys, filter packages, and trigger upgrades — all without leaving the terminal. Powered by Charm's Bubble Tea framework.</p>
-          </article>
-
-          <!-- Silent mode -->
-          <article class="feature">
-            <div class="feature__icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-              </svg>
-            </div>
-            <h3 class="feature__name">Silent <code>-y</code> Mode</h3>
-            <p class="feature__desc">Run <code>wingman.exe -y</code> to apply every supported upgrade non-interactively — perfect for scripts, scheduled tasks, and CI pipelines.</p>
-          </article>
-
-          <!-- Parallel discovery -->
-          <article class="feature">
-            <div class="feature__icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="3"/>
-                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 19.07a10 10 0 0 1 0-14.14"/>
-                <path d="M22.61 2.39a14 14 0 0 1 0 19.22M1.39 21.61a14 14 0 0 1 0-19.22"/>
-              </svg>
-            </div>
-            <h3 class="feature__name">Parallel Discovery</h3>
-            <p class="feature__desc">All package managers are queried concurrently — no waiting for one to finish before the next begins. Benchmarked with <code>go test -bench</code>.</p>
-          </article>
-
-          <!-- Auto releases -->
-          <article class="feature">
-            <div class="feature__icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
-              </svg>
-            </div>
-            <h3 class="feature__name">Auto Releases</h3>
-            <p class="feature__desc">Conventional commits on push to master trigger automated GitHub releases — always get the latest binary, no manual tagging required.</p>
-          </article>
-
-          <!-- Start menu shortcut -->
-          <article class="feature">
-            <div class="feature__icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                <path d="M3 9h18M9 21V9"/>
-              </svg>
-            </div>
-            <h3 class="feature__name">Start Menu Integration</h3>
-            <p class="feature__desc">Run <code>wingman.exe -install-shortcut</code> to pin Wingman to your Start Menu — launch the TUI without opening a terminal first.</p>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- How It Works -->
-    <section class="how" aria-labelledby="how-heading">
-      <div class="how__inner">
-        <div class="how__header">
-          <p class="how__kicker">// HOW IT WORKS</p>
-          <h2 id="how-heading" class="how__title">Interactive or fully automated.</h2>
+        <div class="footer-left">
+          <span class="footer-logo">WINGMAN</span>
+          <span class="footer-copy">Built by Piyush Mishra · MIT License</span>
         </div>
 
-        <div class="how__steps">
-          <!-- Step 1 -->
-          <div class="how__step">
-            <span class="how__step-num">01</span>
-            <h3 class="how__step-title">Run Wingman</h3>
-            <p class="how__step-desc">Launch <code>wingman.bat</code> for the full TUI, or <code>wingman.exe -y</code> to upgrade everything silently in one shot.</p>
-            <div class="how__step-cli" aria-hidden="true">
-              <span class="how__cli-prompt">C:\&gt;</span>
-              <span class="how__cli-cmd">wingman.bat</span>
-            </div>
-          </div>
-
-          <div class="how__arrow" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"/>
-              <polyline points="12 5 19 12 12 19"/>
+        <div class="footer-right">
+          <a href="https://github.com/piyush97/wingman" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub repository">
+            <svg class="footer-link-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.071 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.682-.103-.254-.446-1.27.098-2.646 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.376.202 2.392.1 2.646.64.698 1.028 1.591 1.028 2.682 0 3.841-2.337 4.687-4.565 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.162 22 16.416 22 12c0-5.523-4.477-10-10-10z"/>
             </svg>
-          </div>
-
-          <!-- Step 2 -->
-          <div class="how__step">
-            <span class="how__step-num">02</span>
-            <h3 class="how__step-title">Parallel Scan</h3>
-            <p class="how__step-desc">Wingman queries all 7 sources simultaneously and merges results into one unified package list.</p>
-            <div class="how__scan" aria-hidden="true">
-              <div class="how__scan-bar" style="--delay: 0s">
-                <span class="how__scan-label">winget</span>
-                <div class="how__scan-fill"></div>
-              </div>
-              <div class="how__scan-bar" style="--delay: 0.15s">
-                <span class="how__scan-label">choco</span>
-                <div class="how__scan-fill"></div>
-              </div>
-              <div class="how__scan-bar" style="--delay: 0.3s">
-                <span class="how__scan-label">npm</span>
-                <div class="how__scan-fill"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="how__arrow" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"/>
-              <polyline points="12 5 19 12 12 19"/>
+            GitHub
+          </a>
+          <a href="https://piyushm.dev" class="footer-link" aria-label="Piyush Mishra portfolio">
+            <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
             </svg>
-          </div>
-
-          <!-- Step 3 -->
-          <div class="how__step">
-            <span class="how__step-num">03</span>
-            <h3 class="how__step-title">Browse &amp; Upgrade</h3>
-            <p class="how__step-desc">Navigate the update list with arrow keys, select packages, and press Enter to upgrade — or let <code>-y</code> handle all.</p>
-            <div class="how__step-cli" aria-hidden="true">
-              <span class="how__cli-ok">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <polyline points="20 6 9 17 4 12"/>
-                </svg>
-              </span>
-              <span class="how__cli-result">12 packages upgraded</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tech stack -->
-        <div class="tech">
-          <p class="tech__label">// BUILT WITH</p>
-          <div class="tech__pills">
-            <span class="tech__pill tech__pill--go">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M1.811 10.231c-.047 0-.058-.023-.035-.059l.246-.315c.023-.035.081-.058.128-.058h4.172c.046 0 .058.035.035.07l-.199.303c-.023.036-.082.07-.117.07zM.047 11.306c-.047 0-.059-.023-.035-.058l.245-.316c.023-.035.082-.058.129-.058h5.328c.047 0 .059.035.047.07l-.093.28c-.012.047-.058.07-.105.07zm2.828 1.075c-.047 0-.059-.035-.035-.07l.163-.292c.023-.035.07-.07.117-.07h2.337c.047 0 .07.035.07.082l-.023.28c0 .047-.047.082-.082.082zm12.129-2.36c-.736.187-1.239.327-1.963.514-.176.046-.187.058-.34-.117-.174-.199-.303-.327-.548-.444-.737-.362-1.45-.257-2.115.175-.795.514-1.204 1.274-1.192 2.22.011.935.654 1.706 1.577 1.835.795.105 1.46-.175 1.987-.77.105-.13.198-.27.315-.434H10.47c-.245 0-.304-.152-.222-.35.152-.362.432-.97.596-1.274a.315.315 0 0 1 .292-.187h4.253c-.023.316-.023.631-.07.947a4.983 4.983 0 0 1-.958 2.29c-.841 1.11-1.94 1.8-3.33 1.986-1.145.152-2.209-.07-3.143-.77-.865-.655-1.356-1.52-1.484-2.595-.152-1.274.222-2.419.993-3.424.83-1.086 1.928-1.776 3.272-2.02 1.098-.2 2.15-.07 3.096.571.62.41 1.063.97 1.356 1.648.07.105.023.164-.117.2zm3.868 6.461c-1.064-.024-2.034-.328-2.852-1.029a3.665 3.665 0 0 1-1.262-2.255c-.21-1.32.152-2.489.947-3.529.853-1.122 1.881-1.706 3.272-1.95 1.192-.21 2.314-.095 3.33.595.923.63 1.496 1.484 1.648 2.605.198 1.578-.257 2.863-1.344 3.962-.771.783-1.718 1.273-2.805 1.495-.315.06-.63.07-.934.106zm2.78-4.72c-.011-.153-.011-.27-.034-.387-.21-1.157-1.274-1.81-2.384-1.554-1.087.245-1.788 1.01-2.01 2.126-.186.9.409 1.83 1.32 2.032.73.163 1.426-.012 2.012-.535.525-.48.808-1.086.096-2.281z"/>
-              </svg>
-              Go 1.23+
-            </span>
-            <span class="tech__pill">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polyline points="4 17 10 11 4 5"/>
-                <line x1="12" y1="19" x2="20" y2="19"/>
-              </svg>
-              Bubble Tea
-            </span>
-            <span class="tech__pill">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                <path d="M3 9h18M9 21V9"/>
-              </svg>
-              Windows 10/11
-            </span>
-            <span class="tech__pill">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
-              </svg>
-              GitHub Actions
-            </span>
-            <span class="tech__pill">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                <polyline points="14 2 14 8 20 8"/>
-              </svg>
-              Conventional Commits
-            </span>
-          </div>
+            piyushm.dev
+          </a>
         </div>
 
       </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="cta" aria-labelledby="cta-heading">
-      <div class="cta__inner">
-        <div class="cta__glow" aria-hidden="true"></div>
-        <div class="cta__content">
-          <p class="cta__kicker">// GET STARTED</p>
-          <h2 id="cta-heading" class="cta__title">One command to upgrade everything.</h2>
-          <p class="cta__desc">Download the latest alpha release and run it on Windows — interactive TUI or silent batch mode.</p>
-          <div class="cta__actions">
-            <a class="btn btn--primary btn--lg" href="https://github.com/PiyushMishra318/wingman/releases/latest" id="release-link-cta">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="7 10 12 15 17 10"/>
-                <line x1="12" y1="15" x2="12" y2="3"/>
-              </svg>
-              Download Latest Release
-            </a>
-            <a class="btn btn--ghost" href="https://github.com/PiyushMishra318/wingman" target="_blank" rel="noopener noreferrer">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
-              </svg>
-              Star on GitHub
-            </a>
-          </div>
-
-          <div class="cta__quick" aria-label="Quick start commands">
-            <div class="cta__line">
-              <span class="cta__prompt">#</span>
-              <span class="cta__comment">interactive TUI</span>
-            </div>
-            <div class="cta__line">
-              <span class="cta__prompt">$</span>
-              <span class="cta__cmd">wingman.bat</span>
-            </div>
-            <div class="cta__line cta__line--spacer"></div>
-            <div class="cta__line">
-              <span class="cta__prompt">#</span>
-              <span class="cta__comment">upgrade everything silently</span>
-            </div>
-            <div class="cta__line">
-              <span class="cta__prompt">$</span>
-              <span class="cta__cmd">wingman.exe -y</span>
-            </div>
-            <div class="cta__line cta__line--spacer"></div>
-            <div class="cta__line">
-              <span class="cta__prompt">#</span>
-              <span class="cta__comment">development</span>
-            </div>
-            <div class="cta__line">
-              <span class="cta__prompt">$</span>
-              <span class="cta__cmd">go run ./cmd/wingman</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer__inner">
-      <p class="footer__copy">MIT &copy; 2026 &mdash; Built by <a href="/">Piyush Mishra</a></p>
-      <nav class="footer__links" aria-label="Footer links">
-        <a href="https://github.com/PiyushMishra318/wingman" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a href="https://github.com/PiyushMishra318/wingman/releases" target="_blank" rel="noopener noreferrer">Releases</a>
-        <a href="https://github.com/PiyushMishra318/wingman#readme" target="_blank" rel="noopener noreferrer">Docs</a>
-        <a href="/">Portfolio</a>
-      </nav>
     </div>
   </footer>
-
-  <script>
-    // Fetch latest release and update download links
-    fetch("https://api.github.com/repos/PiyushMishra318/wingman/releases/latest")
-      .then(function(r) { return r.ok ? r.json() : null; })
-      .then(function(rel) {
-        if (!rel) return;
-        var exe = rel.assets && rel.assets.find(function(a) {
-          return a.name && (a.name.endsWith(".exe") || a.name.endsWith(".zip"));
-        });
-        var url = exe ? exe.browser_download_url : rel.html_url;
-        document.querySelectorAll("#release-link, #release-link-cta").forEach(function(el) {
-          el.href = url;
-        });
-      })
-      .catch(function() {});
-  </script>
 
 </body>
 </html>
